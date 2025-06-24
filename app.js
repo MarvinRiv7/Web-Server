@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+require('dotenv').config();
+const port = process.env.PORT;
 const hbs = require('hbs');
 
 
@@ -45,6 +46,6 @@ app.use((req, res) => {
 
 console.log("App corriendo");
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening on port localhost:${port}`);
 });
 
