@@ -1,22 +1,50 @@
+const express = require("express");
+const app = express();
+const port = 8080;
+const hbs = require('hbs');
 
-const express = require('express')
-const app = express()
-const port = 8080
 
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
+//handlebars
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+//middleware servir contenido estatico
 
-app.get('/hola-mundo', (req, res) => {
-  res.send('Hello World!!!!!!!')
-})
+app.use(express.static("public"));
 
-app.use((req, res) => {
-  res.status(404).send('404 Page Not Found');
+// app.get("/generic", (req, res) => {
+//   res.sendFile(__dirname + "/public/generic.html");
+// });
+// app.get("/elements", (req, res) => {
+//   res.sendFile(__dirname + "/public/elements.html");
+// });
+
+app.get("/", (req, res) => {
+  res.render('home', {
+    nombre: 'Marvin Rivas',
+    titulo: 'Curso de Node.js'
+  });
 });
 
+app.get("/generic", (req, res) => {
+  res.render('generic', {
+    nombre: 'Marvin Rivas',
+    titulo: 'Curso de Node.js'
+  });
+});
 
-console.log('App corriendo')
+app.get("/elements", (req, res) => {
+  res.render('elements', {
+    nombre: 'Marvin Rivas',
+    titulo: 'Curso de Node.js'
+  });
+});
+
+app.use((req, res) => {
+  res.status(404).sendFile(__dirname + "/public/404.html");
+});
+
+console.log("App corriendo");
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
+
